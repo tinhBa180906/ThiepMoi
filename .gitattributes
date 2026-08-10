@@ -37,3 +37,4 @@ graduation_bg.png filter=lfs diff=lfs merge=lfs -text
 graduation_divider.png filter=lfs diff=lfs merge=lfs -text
 photo2.jpg filter=lfs diff=lfs merge=lfs -text
 photo3.jpg filter=lfs diff=lfs merge=lfs -text
+photo4.jpg filter=lfs diff=lfs merge=lfs -text
