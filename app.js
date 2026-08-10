@@ -195,8 +195,14 @@ function confirmName() {
     // kick off init
     initParticles();
     initPhotoBalloons();
+    initShootingStars();
+    initConfetti();
     updateCountdown();
     setInterval(updateCountdown, 1000);
+    // Launch fireworks burst on entry
+    setTimeout(() => launchFireworks(), 800);
+    setTimeout(() => launchFireworks(), 1600);
+    setTimeout(() => launchFireworks(), 2400);
     // Scroll to top smoothly
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, 500);
@@ -495,3 +501,82 @@ document.addEventListener('DOMContentLoaded', () => {
   // Show main content if name already set (page refresh)
   // (modal shows by default; user must confirm each time)
 });
+
+// ── Shooting Stars ─────────────────────────────────────
+function initShootingStars() {
+  const container = document.getElementById('shootingStarsContainer');
+  if (!container) return;
+
+  function spawnStar() {
+    const star = document.createElement('div');
+    star.className = 'shooting-star';
+    const top = Math.random() * 60;
+    const left = Math.random() * 80 + 10;
+    const duration = Math.random() * 2 + 1.5;
+    star.style.cssText = `top:${top}%;left:${left}%;animation-duration:${duration}s;animation-delay:0s`;
+    container.appendChild(star);
+    setTimeout(() => star.remove(), duration * 1000 + 200);
+  }
+
+  // Initial burst
+  for (let i = 0; i < 3; i++) setTimeout(spawnStar, i * 600);
+  // Keep spawning
+  setInterval(spawnStar, 2200);
+}
+
+// ── Confetti ───────────────────────────────────────────
+function initConfetti() {
+  const container = document.getElementById('confettiContainer');
+  if (!container) return;
+
+  const colors = ['#fde68a','#5eead4','#fecdd3','#ddd6fe','#a5f3fc','#f0abfc','#34d399'];
+  const shapes = ['●','■','▲','♦','★'];
+
+  function spawnConfetti() {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    const left = Math.random() * 100;
+    const duration = Math.random() * 3 + 3;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const shape = shapes[Math.floor(Math.random() * shapes.length)];
+    piece.textContent = shape;
+    piece.style.cssText = `
+      left:${left}%;
+      color:${color};
+      font-size:${Math.random()*12+8}px;
+      animation-duration:${duration}s;
+      animation-delay:${Math.random()*2}s;
+    `;
+    container.appendChild(piece);
+    setTimeout(() => piece.remove(), (duration + 2) * 1000);
+  }
+
+  for (let i = 0; i < 20; i++) setTimeout(spawnConfetti, i * 200);
+  setInterval(spawnConfetti, 500);
+}
+
+// ── Fireworks ──────────────────────────────────────────
+function launchFireworks() {
+  const colors = ['#fde68a','#5eead4','#fecdd3','#ddd6fe','#f0abfc','#34d399','#fb923c'];
+  const x = Math.random() * window.innerWidth;
+  const y = Math.random() * window.innerHeight * 0.5;
+
+  for (let i = 0; i < 20; i++) {
+    const spark = document.createElement('div');
+    spark.className = 'firework-spark';
+    const angle = (i / 20) * Math.PI * 2;
+    const dist = Math.random() * 120 + 60;
+    spark.style.cssText = `
+      left:${x}px;top:${y}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      --tx:${Math.cos(angle)*dist}px;
+      --ty:${Math.sin(angle)*dist}px;
+      box-shadow:0 0 6px 2px currentColor;
+    `;
+    document.body.appendChild(spark);
+    setTimeout(() => spark.remove(), 950);
+  }
+}
+
+// Auto fireworks every 8 seconds
+setInterval(launchFireworks, 8000);
