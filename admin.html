@@ -115,7 +115,7 @@
   </div>
 
   <script>
-    const CLOUD_DB_URL = 'https://api.restful-api.dev/objects/ff8081819f7e10ae019febf646211dd0';
+    const CLOUD_DB_URL = 'https://jsonblob.com/api/jsonBlob/019fec2a-1625-7848-97ee-fb625eeeb2f6';
 
     async function loadData() {
       let rsvpsData = [];
@@ -126,7 +126,7 @@
         const cloudRes = await fetch(CLOUD_DB_URL);
         if (cloudRes.ok) {
           const json = await cloudRes.json();
-          const list = json?.data?.records || [];
+          const list = json?.records || [];
           rsvpsData = [...list].reverse();
         }
       } catch (err) {
