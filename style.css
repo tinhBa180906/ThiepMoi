@@ -98,22 +98,45 @@ body {
   padding: 40px 16px 60px;
 }
 
+/* ── Card wrapper with animated rainbow border ── */
+.card-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  border-radius: 34px;
+  padding: 3px;
+  background: linear-gradient(var(--angle, 0deg),
+    #5eead4, #fde68a, #fecdd3, #ddd6fe, #a5f3fc, #5eead4
+  );
+  animation: rotateBorder 4s linear infinite;
+  box-shadow: 0 0 40px rgba(45,212,191,0.4), 0 0 80px rgba(253,230,138,0.2);
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes rotateBorder {
+  to { --angle: 360deg; }
+}
+
 /* ── Card ── */
 .card {
   width: 100%;
-  max-width: 680px;
   background: var(--white);
   border-radius: 32px;
-  box-shadow: var(--shadow-card);
   overflow: hidden;
   animation: cardEntrance 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   transform: translateY(40px);
   opacity: 0;
+  position: relative;
 }
 
 @keyframes cardEntrance {
   to { transform: translateY(0); opacity: 1; }
 }
+
 
 /* ── Card Header ── */
 .card-header {
@@ -349,20 +372,24 @@ body {
 
 .sparkle {
   position: absolute;
-  font-size: 14px;
-  color: var(--pastel-gold);
   animation: sparkleBling 2.5s ease-in-out infinite;
   filter: drop-shadow(0 0 6px rgba(253,230,138,0.8));
 }
 
-.sp1 { top: 0; left: 10%; animation-delay: 0s; }
-.sp2 { top: 15%; right: -5%; animation-delay: 0.6s; font-size: 16px; }
-.sp3 { bottom: 5%; left: 0; animation-delay: 1.2s; font-size: 16px; }
-.sp4 { bottom: -5%; right: 15%; animation-delay: 1.8s; }
+.sp1 { top: -8px; left: 10%; font-size: 18px; color: #fde68a; animation-delay: 0s; }
+.sp2 { top: 10%; right: -12px; font-size: 20px; color: #f0abfc; animation-delay: 0.5s; }
+.sp3 { bottom: 5%; left: -10px; font-size: 18px; color: #5eead4; animation-delay: 1s; }
+.sp4 { bottom: -10px; right: 10%; font-size: 22px; color: #fde68a; animation-delay: 1.5s; }
+.sp5 { top: 40%; left: -15px; font-size: 14px; color: #fecdd3; animation-delay: 0.3s; }
+.sp6 { top: 60%; right: -15px; font-size: 16px; color: #a5f3fc; animation-delay: 0.9s; }
+.sp7 { top: -5px; right: 20%; font-size: 12px; color: #c4b5fd; animation-delay: 2s; }
+.sp8 { bottom: 30%; left: -8px; font-size: 14px; color: #fde68a; animation-delay: 1.7s; }
 
 @keyframes sparkleBling {
-  0%, 100% { transform: scale(0.6) rotate(0deg); opacity: 0.3; }
-  50%       { transform: scale(1.3) rotate(45deg); opacity: 1; filter: drop-shadow(0 0 10px rgba(253,230,138,1)); }
+  0%   { transform: scale(0.4) rotate(0deg); opacity: 0; }
+  30%  { transform: scale(1.4) rotate(30deg); opacity: 1; filter: drop-shadow(0 0 14px rgba(253,230,138,1)); }
+  60%  { transform: scale(0.8) rotate(60deg); opacity: 0.6; }
+  100% { transform: scale(0.4) rotate(90deg); opacity: 0; }
 }
 
 .graduate-info { flex: 1; }
@@ -1275,3 +1302,164 @@ body {
   100% { transform: scale(1.4) rotate(45deg); opacity: 1; filter: drop-shadow(0 0 12px rgba(253,230,138,1)); }
 }
 
+
+/* ===== SHOOTING STARS ===== */
+.shooting-stars-container {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0; overflow: hidden;
+}
+.shooting-star {
+  position: absolute;
+  width: 4px; height: 4px; border-radius: 50%;
+  background: #fde68a;
+  filter: drop-shadow(0 0 6px #fde68a) drop-shadow(0 0 20px #5eead4);
+  animation: shootStar linear infinite;
+}
+.shooting-star::before {
+  content: '';
+  position: absolute; top: 50%; right: 0;
+  transform: translateY(-50%);
+  width: 100px; height: 2px;
+  background: linear-gradient(to left, rgba(253,230,138,0.8), transparent);
+}
+@keyframes shootStar {
+  0%   { transform: translateX(0) translateY(0) rotate(215deg); opacity: 1; }
+  70%  { opacity: 1; }
+  100% { transform: translateX(-900px) translateY(700px) rotate(215deg); opacity: 0; }
+}
+
+/* ===== CONFETTI ===== */
+.confetti-container {
+  position: fixed; top: 0; left: 0; right: 0; height: 100vh;
+  pointer-events: none; z-index: 0; overflow: hidden;
+}
+.confetti-piece {
+  position: absolute; top: -20px;
+  width: 8px; height: 8px; opacity: 0;
+  animation: confettiFall linear infinite;
+}
+@keyframes confettiFall {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  80%  { opacity: 0.8; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* ===== FIREWORKS ===== */
+.firework-spark {
+  position: fixed; width: 5px; height: 5px; border-radius: 50%;
+  pointer-events: none; z-index: 9000;
+  animation: sparkFly 0.9s ease-out forwards;
+}
+@keyframes sparkFly {
+  0%   { transform: translate(0, 0) scale(1.2); opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+}
+
+/* ===== SECTION TITLE GLOW ===== */
+.section-title { animation: titleGlow 3s ease-in-out infinite; }
+@keyframes titleGlow {
+  0%, 100% { text-shadow: none; }
+  50%       { text-shadow: 0 0 16px rgba(13,148,136,0.5), 0 0 32px rgba(45,212,191,0.3); }
+}
+
+/* ===== COUNTDOWN PULSE ===== */
+.countdown-num { animation: countPulse 1s ease-in-out infinite; }
+@keyframes countPulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 6px rgba(253,230,138,0.5)); }
+  50%       { transform: scale(1.1); filter: drop-shadow(0 0 18px rgba(253,230,138,1)); }
+}
+
+/* ===== AVATAR RING GLOW ===== */
+.avatar-ring { box-shadow: 0 0 15px rgba(45,212,191,0.5), 0 0 30px rgba(45,212,191,0.2); }
+
+/* ===== RAINBOW GLOW ON GRAD NAME ===== */
+.grad-name.shimmer-text { animation: shineText 3s linear infinite, rainbowGlow 4s ease-in-out infinite; }
+@keyframes rainbowGlow {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(13,148,136,0.4)); }
+  33%       { filter: drop-shadow(0 0 12px rgba(253,230,138,0.9)); }
+  66%       { filter: drop-shadow(0 0 12px rgba(240,171,252,0.8)); }
+}
+
+/* ===== ANIMATED BACKGROUND ===== */
+body {
+  background: linear-gradient(-45deg, #e0f7fa, #b2dfdb, #e0f2f1, #e8f5e9, #f3e5f5, #fef3c7);
+  background-size: 400% 400%;
+  animation: gradientShift 14s ease infinite;
+  background-attachment: fixed;
+}
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== GRAD CARD GLOW ===== */
+.graduate-card { animation: cardGlow 4s ease-in-out infinite; }
+@keyframes cardGlow {
+  0%, 100% { box-shadow: 0 4px 20px rgba(13,148,136,0.1); }
+  50%       { box-shadow: 0 4px 20px rgba(13,148,136,0.1), 0 0 35px rgba(45,212,191,0.3), 0 0 70px rgba(253,230,138,0.12); }
+}
+
+/* ===== RSVP BUTTON BREATH ===== */
+.btn-wish { animation: btnBreath 2s ease-in-out infinite; }
+@keyframes btnBreath {
+  0%, 100% { box-shadow: var(--shadow-btn); }
+  50%       { box-shadow: 0 8px 24px rgba(13,148,136,0.4), 0 0 45px rgba(45,212,191,0.6), 0 0 90px rgba(253,230,138,0.4); }
+}
+
+/* ===== HEADER STARS POP ===== */
+.header-stars-row span { display: inline-block; animation: starPop 2s ease-in-out infinite; }
+.header-stars-row span:nth-child(2) { animation-delay: 0.4s; }
+.header-stars-row span:nth-child(3) { animation-delay: 0.8s; }
+.header-stars-row span:nth-child(4) { animation-delay: 1.2s; }
+.header-stars-row span:nth-child(5) { animation-delay: 1.6s; }
+@keyframes starPop {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50%       { transform: scale(1.8) rotate(20deg); opacity: 1; filter: drop-shadow(0 0 10px rgba(253,230,138,1)); }
+}
+
+/* ===== QUOTE BOX SHIMMER ===== */
+.quote-box { position: relative; overflow: hidden; }
+.quote-box::after {
+  content: ''; position: absolute;
+  top: 0; left: -100%; width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
+  animation: shimmerPass 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes shimmerPass {
+  0%   { left: -100%; }
+  100% { left: 220%; }
+}
+
+/* ===== ORNAMENT FLOAT ===== */
+.section-ornament { animation: ornamentFloat 4s ease-in-out infinite; }
+@keyframes ornamentFloat {
+  0%, 100% { transform: translateY(0); letter-spacing: 0.2em; }
+  50%       { transform: translateY(-5px); letter-spacing: 0.3em; }
+}
+
+/* ===== FOOTER STARS ===== */
+.footer-stars span { display: inline-block; animation: twinkle 1.5s ease-in-out infinite; }
+.footer-stars span:nth-child(2) { animation-delay: 0.5s; }
+.footer-stars span:nth-child(3) { animation-delay: 1s; }
+
+/* ===== BADGE SHIMMER ===== */
+.grad-title-badge { position: relative; overflow: hidden; }
+.grad-title-badge::after {
+  content: ''; position: absolute;
+  top: 0; left: -100%; width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: badgeShimmer 2.5s ease-in-out infinite;
+}
+@keyframes badgeShimmer {
+  0%   { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* ===== ICON BOX PULSE ===== */
+.detail-icon-box { animation: iconPulse 3s ease-in-out infinite; }
+@keyframes iconPulse {
+  0%, 100% { box-shadow: 0 4px 12px rgba(13,148,136,0.25); }
+  50%       { box-shadow: 0 4px 12px rgba(13,148,136,0.25), 0 0 20px rgba(45,212,191,0.5); transform: scale(1.05); }
+}
