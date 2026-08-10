@@ -1,19 +1,351 @@
-<!doctype html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<title>My static Space</title>
-		<link rel="stylesheet" href="style.css" />
-	</head>
-	<body>
-		<div class="card">
-			<h1>Welcome to your static Space!</h1>
-			<p>You can modify this app directly by editing <i>index.html</i> in the Files and versions tab.</p>
-			<p>
-				Also don't forget to check the
-				<a href="https://huggingface.co/docs/hub/spaces" target="_blank">Spaces documentation</a>.
-			</p>
-		</div>
-	</body>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thiệp Mời Tốt Nghiệp – Nguyễn Văn Hồ</title>
+  <meta name="description" content="Trân trọng kính mời quý vị đến tham dự Lễ Tốt Nghiệp của Nguyễn Văn Hồ – Kỹ Thuật Phần Mềm – Đại học Nam Cần Thơ 2026." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ====== NAME MODAL ====== -->
+<div class="modal-overlay" id="nameModal">
+  <div class="modal-card">
+    <div class="modal-cap">🎓</div>
+    <div class="modal-stars">
+      <span class="star s1">✦</span>
+      <span class="star s2">✦</span>
+      <span class="star s3">✦</span>
+    </div>
+    <p class="modal-sub">Thiệp Mời Tốt Nghiệp</p>
+    <h2 class="modal-title">Xin chào, quý khách!</h2>
+    <p class="modal-desc">
+      Để cá nhân hóa lời mời này, vui lòng cho tôi biết<br/>
+      <strong>quý danh của bạn</strong> nhé 💌
+    </p>
+    <div class="modal-input-wrap">
+      <input
+        type="text"
+        id="guestNameInput"
+        class="modal-input"
+        placeholder="Nhập tên của bạn..."
+        maxlength="60"
+        autocomplete="off"
+      />
+    </div>
+    <button class="modal-btn" id="confirmNameBtn" onclick="confirmName()">
+      <span>Xem Thiệp Mời</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+    <p class="modal-note">* Tên của bạn sẽ được dùng để cá nhân hóa nội dung thiệp</p>
+  </div>
+</div>
+
+<!-- ====== MAIN CONTENT ====== -->
+<div class="page-wrapper" id="mainContent" style="display:none;">
+
+  <!-- Floating particles & Photo Balloons -->
+  <div class="particles" id="particles"></div>
+  <div class="balloons-container" id="balloonsContainer"></div>
+
+  <!-- ===== CARD ===== -->
+  <div class="card">
+
+    <!-- Header -->
+    <div class="card-header">
+      <div class="header-bg-art"></div>
+      <div class="header-glow"></div>
+      <div class="header-content">
+        <div class="badge-row">
+          <span class="badge-chip">🎓 Lễ Tốt Nghiệp</span>
+          <span class="badge-chip">2026</span>
+        </div>
+        <div class="cap-icon">🎓</div>
+        <p class="header-invite-text">Trân Trọng Kính Mời</p>
+        <h1 class="guest-name-display" id="guestNameDisplay">Quý Khách</h1>
+        <p class="header-sub">đến tham dự</p>
+        <h2 class="ceremony-title">Lễ Tốt Nghiệp</h2>
+        <p class="ceremony-subtitle">Đại học Nam Cần Thơ · Khóa 2022–2026</p>
+        <div class="header-stars-row">
+          <span>✦</span><span>✦</span><span>✦</span><span>✦</span><span>✦</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Graduate Info Section -->
+    <div class="section section-graduate">
+      <div class="section-ornament">✨ — ✦ — ✨</div>
+      <div class="graduate-card">
+        <div class="graduate-avatar">
+          <img src="avatar.jpg" alt="Nguyễn Văn Hồ" class="avatar-img" />
+          <div class="avatar-ring"></div>
+          <div class="avatar-ring ring-2"></div>
+          <div class="avatar-sparkles">
+            <span class="sparkle sp1">✨</span>
+            <span class="sparkle sp2">✦</span>
+            <span class="sparkle sp3">🌟</span>
+            <span class="sparkle sp4">✨</span>
+          </div>
+        </div>
+        <div class="graduate-info">
+          <div class="grad-title-badge">
+            <span class="badge-icon">🎓</span>
+            <span class="grad-label">Tân Kỹ Sư</span>
+            <span class="sparkle-mini">✨</span>
+          </div>
+          <h3 class="grad-name shimmer-text">Nguyễn Văn Hồ</h3>
+          <p class="grad-detail">
+            <span class="detail-icon">🎯</span>
+            Mã SV: <strong>DH22KPM01 — 222520</strong>
+          </p>
+          <p class="grad-detail">
+            <span class="detail-icon">💻</span>
+            Ngành: <strong>Kỹ Thuật Phần Mềm</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divider image -->
+    <div class="divider-img">
+      <img src="graduation_divider.png" alt="divider" />
+    </div>
+
+    <!-- Invitation Letter -->
+    <div class="section section-letter">
+      <div class="letter-header">
+        <span class="letter-icon">💌</span>
+        <h3 class="letter-title">Thư Mời Chân Thành</h3>
+      </div>
+
+      <div class="letter-body">
+        <p class="letter-salute" id="letterSalute">Kính gửi Quý Khách,</p>
+
+        <p class="letter-para">
+          Với niềm vui và xúc động khôn tả, tôi — <span class="highlight-name">Nguyễn Văn Hồ</span> — xin
+          trân trọng kính mời <span class="guest-inline" id="guestInline1">bạn</span> đến tham dự
+          <strong>Lễ Tốt Nghiệp</strong> của tôi — một cột mốc ý nghĩa nhất trong hành trình
+          4 năm đại học đầy nỗ lực và khát vọng.
+        </p>
+
+        <p class="letter-para">
+          Mỗi trang sách, mỗi đêm thức khuya, mỗi dòng code được viết nên đều mang trong đó
+          ước mơ về ngày hôm nay. Và thật may mắn khi tôi được chia sẻ khoảnh khắc thiêng liêng
+          này cùng với <span class="guest-inline" id="guestInline2">bạn</span> — người đã luôn
+          hiện diện và cổ vũ tôi trên con đường ấy.
+        </p>
+
+        <div class="quote-box">
+          <p class="quote-text">
+            "Học tập không chỉ là nhận lấy kiến thức,<br/>
+            mà là mang kiến thức đó thắp sáng thế giới."
+          </p>
+        </div>
+
+        <p class="letter-para">
+          Sự hiện diện của <span class="guest-inline" id="guestInline3">bạn</span> sẽ là
+          món quà vô giá nhất mà tôi có thể nhận được trong ngày đặc biệt này.
+          Chính những người thân yêu như <span class="guest-inline" id="guestInline4">bạn</span>
+          đã trở thành động lực để tôi vượt qua tất cả những thử thách của con đường học vấn.
+        </p>
+      </div>
+    </div>
+
+    <!-- Event Details -->
+    <div class="section section-details">
+      <h3 class="section-title">
+        <span class="section-title-icon">📋</span>
+        Chi Tiết Sự Kiện
+      </h3>
+
+      <div class="details-grid">
+        <div class="detail-item">
+          <div class="detail-icon-box">📅</div>
+          <div class="detail-text">
+            <span class="detail-label">Ngày</span>
+            <span class="detail-value">Thứ Bảy, 22 tháng 08 năm 2026</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon-box">🕐</div>
+          <div class="detail-text">
+            <span class="detail-label">Giờ Bắt Đầu</span>
+            <span class="detail-value">7:00 Sáng (Mời đến trước 6:45)</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon-box">📍</div>
+          <div class="detail-text">
+            <span class="detail-label">Địa Điểm</span>
+            <span class="detail-value">Khu D – Trường Đại học Nam Cần Thơ</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon-box">🎓</div>
+          <div class="detail-text">
+            <span class="detail-label">Ngành Học</span>
+            <span class="detail-value">Kỹ Thuật Phần Mềm (DH22KPM01)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Promise & Thanks -->
+    <div class="section section-promise">
+      <div class="promise-card">
+        <h3 class="promise-title">🌟 Lời Hứa Hẹn</h3>
+        <p class="promise-text">
+          Hành trình của tôi chưa dừng lại ở đây. Với tấm bằng Kỹ Thuật Phần Mềm trong tay,
+          tôi hứa sẽ tiếp tục phấn đấu, cống hiến hết mình và không ngừng học hỏi để xứng đáng
+          với tất cả niềm tin mà gia đình, thầy cô và bạn bè đã dành cho tôi — đặc biệt là
+          <span class="guest-inline" id="guestInline5">bạn</span>!
+        </p>
+        <p class="promise-text" style="margin-top: 12px;">
+          Tôi hứa sẽ dùng tri thức và kỹ năng của mình để đóng góp cho xã hội, để những dòng code
+          mà tôi viết ra sẽ tạo ra giá trị thực sự cho cộng đồng và đất nước.
+        </p>
+      </div>
+    </div>
+
+    <!-- Thank You -->
+    <div class="section section-thanks">
+      <div class="thanks-card">
+        <h3 class="thanks-title">💚 Lời Cảm Ơn Sâu Sắc</h3>
+        <p class="thanks-text">
+          Nhân dịp này, tôi muốn gửi lời cảm ơn chân thành và sâu sắc nhất đến
+          <span class="guest-inline" id="guestInline6">bạn</span> — người đã đồng hành,
+          chia sẻ và ủng hộ tôi trên suốt chặng đường vừa qua.
+        </p>
+        <p class="thanks-text" style="margin-top: 12px;">
+          Cảm ơn bạn vì những lần động viên khi tôi chán nản, những nụ cười khi tôi thành công,
+          và cả những khoảnh khắc lặng lẽ bên cạnh khi tôi cần một chỗ dựa tinh thần.
+          <span class="guest-inline" id="guestInline7">Bạn</span> là một phần không thể thiếu
+          trong hành trình đẹp đẽ này của tôi.
+        </p>
+        <div class="thanks-signature">
+          <p>Với tất cả tình cảm và lòng biết ơn,</p>
+          <p class="sig-name">Nguyễn Văn Hồ 💙</p>
+          <p class="sig-date">Tháng 08 / 2026</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Countdown -->
+    <div class="section section-countdown">
+      <h3 class="section-title">
+        <span class="section-title-icon">⏳</span>
+        Đếm Ngược Đến Ngày Trọng Đại
+      </h3>
+      <div class="countdown-grid">
+        <div class="countdown-item">
+          <span class="countdown-num" id="cd-days">--</span>
+          <span class="countdown-label">Ngày</span>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-item">
+          <span class="countdown-num" id="cd-hours">--</span>
+          <span class="countdown-label">Giờ</span>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-item">
+          <span class="countdown-num" id="cd-mins">--</span>
+          <span class="countdown-label">Phút</span>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-item">
+          <span class="countdown-num" id="cd-secs">--</span>
+          <span class="countdown-label">Giây</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RSVP Section -->
+    <div class="section section-rsvp" id="rsvpSection">
+      <div class="rsvp-header">
+        <h3 class="rsvp-title">
+          <span>💌</span> Gửi Lời Chúc &amp; Xác Nhận
+        </h3>
+        <p class="rsvp-desc" id="rsvpDesc">
+          Hãy để lại lời chúc mừng và cho <span class="highlight-name">Nguyễn Văn Hồ</span> biết
+          <span class="guest-inline" id="guestInline8">bạn</span> có tham dự được không nhé! 🎉
+        </p>
+      </div>
+
+      <!-- Trigger button -->
+      <div id="rsvpTrigger">
+        <button class="btn-wish" onclick="openRSVP()">
+          <span>💌 Gửi Lời Chúc</span>
+          <div class="btn-ripple"></div>
+        </button>
+      </div>
+
+      <!-- RSVP Form (hidden initially) -->
+      <div class="rsvp-form" id="rsvpForm" style="display:none;">
+        <div class="form-group">
+          <label class="form-label" for="wishMessage">
+            ✍️ Lời chúc của <span id="wishLabel">bạn</span>:
+          </label>
+          <textarea
+            id="wishMessage"
+            class="form-textarea"
+            rows="4"
+            placeholder="Viết lời chúc mừng chân thành của bạn tại đây..."
+            maxlength="500"
+          ></textarea>
+          <span class="char-count" id="charCount">0 / 500</span>
+        </div>
+
+        <p class="attend-question">
+          Bạn có thể tham dự buổi lễ không?
+        </p>
+        <div class="btn-attend-row">
+          <button class="btn-attend yes" id="btnYes" onclick="submitRSVP('yes')">
+            <span>🎉</span>
+            <span>Tham Gia</span>
+          </button>
+          <button class="btn-attend no" id="btnNo" onclick="submitRSVP('no')">
+            <span>😔</span>
+            <span>Không Tham Gia</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Success message -->
+      <div class="rsvp-success" id="rsvpSuccess" style="display:none;">
+        <div class="success-icon">🎊</div>
+        <h4 class="success-title" id="successTitle">Cảm ơn bạn!</h4>
+        <p class="success-msg" id="successMsg">Đã nhận được lời chúc của bạn 💚</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="card-footer">
+      <div class="footer-stars">
+        <span>✦</span><span>✦</span><span>✦</span>
+      </div>
+      <p class="footer-logo">🎓</p>
+      <p class="footer-school">Trường Đại Học Nam Cần Thơ</p>
+      <p class="footer-faculty">Khoa Công Nghệ Thông Tin</p>
+      <p class="footer-program">Ngành Kỹ Thuật Phần Mềm — Khóa 2022–2026</p>
+      <p class="footer-heart">Made with 💚 by Nguyễn Văn Hồ</p>
+    </div>
+
+  </div>
+  <!-- end .card -->
+
+</div>
+<!-- end .page-wrapper -->
+
+<!-- Toast notification -->
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
 </html>
