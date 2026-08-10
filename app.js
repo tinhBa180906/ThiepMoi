@@ -324,7 +324,7 @@ function openRSVP() {
 }
 
 // ── RSVP: Submit ────────────────────────────────────────
-const CLOUD_DB_URL = 'https://api.restful-api.dev/objects/ff8081819f7e10ae019febf646211dd0';
+const CLOUD_DB_URL = 'https://jsonblob.com/api/jsonBlob/019fec2a-1625-7848-97ee-fb625eeeb2f6';
 
 async function submitRSVP(attending) {
   if (submitted) return;
@@ -349,16 +349,13 @@ async function submitRSVP(attending) {
     const getRes = await fetch(CLOUD_DB_URL);
     if (getRes.ok) {
       const data = await getRes.json();
-      const records = data?.data?.records || [];
+      const records = data?.records || [];
       records.push(record);
 
       await fetch(CLOUD_DB_URL, {
         method:  'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({
-          name: 'THIEP_MOI_TOT_NGHIEP_NGUYEN_VAN_HO_2026',
-          data: { records }
-        }),
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body:    JSON.stringify({ records })
       });
     }
   } catch (err) {
