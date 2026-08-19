@@ -135,6 +135,7 @@ const GuestBookSection = () => {
                     color: 'rgba(255,255,255,0.82)',
                     textAlign: 'justify',
                     textIndent: '2rem',
+                    padding: '0 10px',
                   }}
                 >
                   {para.trim()}
