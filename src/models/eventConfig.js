@@ -61,13 +61,22 @@ export const EVENT_CONFIG = {
       { src: '/assets/img9.jpg', alt: 'Khoảnh khắc 3', large: false },
     ],
 
-    // Bố cục 3: Slider Carousel (nhiều ảnh)
     slider: [
       { src: '/assets/img10.jpg', alt: 'Slide 1', caption: 'Lễ nhận bằng tốt nghiệp' },
       { src: '/assets/img11.jpg', alt: 'Slide 2', caption: 'Khoảnh khắc bên bạn bè' },
       { src: '/assets/img12.jpg', alt: 'Slide 3', caption: 'Ký ức 4 năm đại học' },
       { src: '/assets/img13.jpg', alt: 'Slide 4', caption: 'Cùng nhau lớn lên' },
       { src: '/assets/img14.jpg', alt: 'Slide 5', caption: 'Những ngày cuối khóa' },
+      { src: '/assets/img20.jpg', alt: 'Slide 6', caption: 'Kỷ niệm khó quên' },
+      { src: '/assets/img21.jpg', alt: 'Slide 7', caption: 'Nụ cười rạng rỡ' },
+      { src: '/assets/img22.jpg', alt: 'Slide 8', caption: 'Thanh xuân tươi đẹp' },
+      { src: '/assets/img23.jpg', alt: 'Slide 9', caption: 'Bạn bè thân thiết' },
+      { src: '/assets/img24.jpg', alt: 'Slide 10', caption: 'Hành trang tuổi trẻ' },
+      { src: '/assets/img25.jpg', alt: 'Slide 11', caption: 'Ngày vui trọn vẹn' },
+      { src: '/assets/img26.jpg', alt: 'Slide 12', caption: 'Bước ngoặt mới' },
+      { src: '/assets/img27.jpg', alt: 'Slide 13', caption: 'Dấu ấn thời sinh viên' },
+      { src: '/assets/img28.jpg', alt: 'Slide 14', caption: 'Niềm tự hào' },
+      { src: '/assets/img29.jpg', alt: 'Slide 15', caption: 'Hướng về tương lai' },
     ],
   },
 

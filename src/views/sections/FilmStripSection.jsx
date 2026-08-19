@@ -110,7 +110,7 @@ const FilmStripSection = ({ onImageClick }) => (
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.6 }}
     >
-      ✦ Kỷ Niệm 4 Năm ✦
+      ✦ The Album ✦
     </motion.p>
 
     {/* Vùng film strip — THẲNG hoàn toàn, không nghiêng */}
