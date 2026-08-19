@@ -23,8 +23,8 @@ export const EVENT_CONFIG = {
     month: 'Tháng 08',
     year: '2026',
     displayDate: 'Thứ Bảy, ngày 22 tháng 08 năm 2026',
-    time: '10:45',
-    displayTime: '10 giờ 45 phút',
+    time: '10:00',
+    displayTime: '10 giờ 00 phút',
     venue: 'Học viện Tài chính',
     address: 'Số 58, Phố Lê Văn Hiến, Phường Đức Thắng, Quận Bắc Từ Liêm, Hà Nội',
     mapsUrl: 'https://maps.google.com/maps?q=Học+viện+Tài+chính+Hà+Nội', // TODO: Thay link
