@@ -6,10 +6,11 @@
  * - Typography đè lên ảnh: "Lễ Tốt Nghiệp" + quote
  * - Tên khách mời typewriter font viết tay bên dưới (trên nền trắng)
  * - Mũ tốt nghiệp SVG float nhẹ nhàng
+ * - Modal bảo vệ mật khẩu để sao chép link (Password-protected Copy Link)
  */
 
 import { useEffect, useState, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { EVENT_CONFIG } from '../../models/eventConfig';
 
@@ -68,21 +69,43 @@ const HeroSection = ({ guestName }) => {
   const [guestNameInput, setGuestNameInput] = useState(guestName || 'Khách Mời');
   const { displayed, done } = useTypewriter(guestNameInput, 75, 1000);
 
-  const handleCopyLink = () => {
-    // Generate unique link with guest parameter
-    const url = new URL(window.location.href);
-    url.searchParams.set('guest', guestNameInput);
-    
-    navigator.clipboard.writeText(url.toString()).then(() => {
-      toast.success(`Đã sao chép link mời cho: ${guestNameInput}`);
-    }).catch(() => {
-      toast.error('Không thể sao chép link. Vui lòng thử lại.');
-    });
+  // ===== PASSWORD PROTECTED COPY LINK STATES =====
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    setPassword("");
+    setErrorMsg("");
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setPassword("");
+    setErrorMsg("");
+  };
+
+  const handleConfirmPassword = () => {
+    if (password === "1q2w3e4r5T") {
+      setErrorMsg("");
+      const shareLink = `${window.location.origin}${window.location.pathname}?guest=${encodeURIComponent(guestNameInput)}`;
+      
+      navigator.clipboard.writeText(shareLink).then(() => {
+        toast.success(`Đã sao chép liên kết thành công!`);
+        setTimeout(() => {
+          handleCloseModal();
+        }, 1500);
+      }).catch(() => {
+        toast.error('Không thể sao chép link. Vui lòng thử lại.');
+      });
+    } else {
+      setErrorMsg("Mật khẩu không chính xác!");
+    }
   };
 
   return (
     <section className="relative bg-white overflow-hidden">
-
       {/* ===== PHẦN ẢNH COVER VỚI GRADIENT MASK ===== */}
       <div className="relative">
         <img
@@ -205,7 +228,7 @@ const HeroSection = ({ guestName }) => {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 1.3 }}
-          className="relative"
+          className="relative flex flex-col items-center"
         >
           <p
             className="text-xs font-semibold tracking-[0.35em] uppercase mb-1 drop-shadow-md"
@@ -214,12 +237,12 @@ const HeroSection = ({ guestName }) => {
             THÂN MỜI
           </p>
           
-          <div className="flex justify-center items-center relative group">
+          <div className="flex justify-center items-center relative group w-full max-w-sm">
             <input
               type="text"
               value={displayed}
               onChange={(e) => setGuestNameInput(e.target.value)}
-              className="bg-transparent border-b border-transparent focus:border-white/20 outline-none text-center drop-shadow-md transition-colors"
+              className="bg-transparent border-b border-transparent focus:border-[var(--aof-green)]/30 outline-none text-center drop-shadow-md transition-colors w-full"
               placeholder="Nhập tên..."
               style={{
                 fontFamily: 'var(--font-handwriting)',
@@ -227,23 +250,21 @@ const HeroSection = ({ guestName }) => {
                 color: 'var(--aof-gold)',
                 textShadow: '1px 1px 3px rgba(0,0,0,0.15)',
                 lineHeight: 1.25,
-                width: '90%',
-                maxWidth: '320px'
               }}
             />
-            
-            {/* Copy Button */}
-            <button 
-              onClick={handleCopyLink}
-              title="Sao chép link gửi khách"
-              className="absolute right-0 p-2 text-[var(--aof-gray)] hover:text-[var(--aof-gold)] transition-colors opacity-50 hover:opacity-100"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-              </svg>
-            </button>
           </div>
+
+          {/* Sao chép liên kết button */}
+          <button 
+            onClick={handleOpenModal}
+            className="mt-4 flex items-center justify-center gap-2 px-5 py-2.5 text-[0.7rem] font-semibold uppercase tracking-[0.2em] border border-[var(--aof-gold)] text-[var(--aof-gold-dark)] rounded-full hover:bg-[var(--aof-gold)] hover:text-white transition-all active:scale-95"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            Tạo Link & Sao Chép
+          </button>
         </motion.div>
 
         {/* Ngày giờ ngắn */}
@@ -251,7 +272,7 @@ const HeroSection = ({ guestName }) => {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.5 }}
-          className="mt-5 flex items-center justify-center gap-2 flex-wrap"
+          className="mt-6 flex items-center justify-center gap-2 flex-wrap"
         >
           {[event.dayOfWeek, event.displayDate.replace(event.dayOfWeek + ', ', ''), event.time].map((t, i) => (
             <span key={i} style={{
@@ -287,6 +308,69 @@ const HeroSection = ({ guestName }) => {
           </motion.div>
         </motion.div>
       </div>
+
+      {/* ===== MODAL PASSWORD ===== */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <motion.div 
+            className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center px-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div 
+              className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden relative"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            >
+              {/* Header Modal */}
+              <div className="bg-[var(--aof-green)] px-5 py-4 flex justify-between items-center">
+                <h3 className="text-white font-semibold tracking-wider text-sm uppercase">Bảo mật liên kết</h3>
+                <button onClick={handleCloseModal} className="text-white/80 hover:text-white transition-colors">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+              </div>
+
+              {/* Body Modal */}
+              <div className="p-6">
+                <p className="text-sm text-gray-600 mb-5 text-center leading-relaxed">
+                  Vui lòng nhập mật khẩu để tạo liên kết mời dành riêng cho khách: <br/>
+                  <span className="font-bold text-[var(--aof-green)] text-lg" style={{ fontFamily: 'var(--font-classic)', fontStyle: 'italic' }}>"{guestNameInput}"</span>
+                </p>
+
+                <div className="mb-5">
+                  <input 
+                    type="password" 
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Nhập mật khẩu..."
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-[var(--aof-green)] focus:ring-1 focus:ring-[var(--aof-green)] transition-all text-center tracking-[0.2em] font-mono"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') handleConfirmPassword();
+                    }}
+                  />
+                  {errorMsg && (
+                    <p className="text-red-500 text-xs text-center mt-2 font-medium">{errorMsg}</p>
+                  )}
+                </div>
+
+                <button 
+                  onClick={handleConfirmPassword}
+                  className="w-full py-3 bg-[var(--aof-green)] text-white rounded-lg font-semibold uppercase tracking-widest text-xs hover:bg-[rgba(26,71,49,0.9)] transition-colors active:scale-[0.98]"
+                >
+                  Xác nhận
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </section>
   );
 };
