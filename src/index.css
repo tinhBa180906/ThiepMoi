@@ -291,8 +291,9 @@ body {
 .gold-divider {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
-  margin: 1.5rem 0;
+  margin: 1.5rem auto;
 }
 .gold-divider::before,
 .gold-divider::after {

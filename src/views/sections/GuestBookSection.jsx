@@ -17,15 +17,15 @@ const containerVariants = {
   visible: { transition: { staggerChildren: 0.2, delayChildren: 0.1 } },
 };
 const paragraphVariants = {
-  hidden:  { opacity: 0, x: -20 },
+  hidden: { opacity: 0, x: -20 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
 };
 
 const GuestBookSection = () => {
   const { graduate, invitation } = EVENT_CONFIG;
 
-  // Tách tâm thư thành các đoạn để stagger
-  const paragraphs = invitation.guestbookMessage.split('\n\n').filter(Boolean);
+  // Tách tâm thư thành các đoạn để stagger (hỗ trợ cả 1 hoặc nhiều dấu xuống dòng)
+  const paragraphs = invitation.guestbookMessage.split(/\n+/).filter(Boolean);
 
   return (
     <section
@@ -55,7 +55,7 @@ const GuestBookSection = () => {
 
       {/* Vòng trang trí góc trên trái */}
       <div className="absolute top-0 left-0 w-48 h-48 opacity-10" style={{ transform: 'translate(-30%, -30%)' }}>
-        <svg viewBox="0 0 200 200" fill="none"><circle cx="100" cy="100" r="90" stroke="var(--aof-gold)" strokeWidth="1"/><circle cx="100" cy="100" r="70" stroke="var(--aof-gold)" strokeWidth="0.5"/></svg>
+        <svg viewBox="0 0 200 200" fill="none"><circle cx="100" cy="100" r="90" stroke="var(--aof-gold)" strokeWidth="1" /><circle cx="100" cy="100" r="70" stroke="var(--aof-gold)" strokeWidth="0.5" /></svg>
       </div>
 
       <div className="px-5 relative z-10">
@@ -133,10 +133,11 @@ const GuestBookSection = () => {
                     fontSize: '1.1rem',
                     lineHeight: 1.9,
                     color: 'rgba(255,255,255,0.82)',
-                    whiteSpace: 'pre-line',
+                    textAlign: 'justify',
+                    textIndent: '2rem',
                   }}
                 >
-                  {para}
+                  {para.trim()}
                 </motion.p>
               ))}
             </motion.div>
@@ -155,7 +156,7 @@ const GuestBookSection = () => {
               {/* Tên viết tay */}
               <p style={{
                 fontFamily: 'var(--font-handwriting)',
-                fontSize: '3rem',
+                fontSize: '2rem',
                 color: 'var(--aof-gold-light)',
                 lineHeight: 1,
               }}>
@@ -184,10 +185,10 @@ const GuestBookSection = () => {
           transition={{ delay: 0.5, duration: 0.8 }}
         >
           <svg width="40" height="30" viewBox="0 0 40 30" fill="none">
-            <rect x="1" y="1" width="38" height="28" rx="2" stroke="rgba(201,168,76,0.4)" strokeWidth="1"/>
-            <path d="M1 1 L20 16 L39 1" stroke="rgba(201,168,76,0.4)" strokeWidth="1"/>
-            <path d="M1 29 L13 17" stroke="rgba(201,168,76,0.2)" strokeWidth="1"/>
-            <path d="M39 29 L27 17" stroke="rgba(201,168,76,0.2)" strokeWidth="1"/>
+            <rect x="1" y="1" width="38" height="28" rx="2" stroke="rgba(201,168,76,0.4)" strokeWidth="1" />
+            <path d="M1 1 L20 16 L39 1" stroke="rgba(201,168,76,0.4)" strokeWidth="1" />
+            <path d="M1 29 L13 17" stroke="rgba(201,168,76,0.2)" strokeWidth="1" />
+            <path d="M39 29 L27 17" stroke="rgba(201,168,76,0.2)" strokeWidth="1" />
           </svg>
         </motion.div>
 

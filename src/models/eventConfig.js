@@ -38,7 +38,7 @@ export const EVENT_CONFIG = {
     heroTagline: 'The Beginning of a New Journey',
 
     // Tâm thư - lưu bút
-    guestbookMessage: `Ngày tốt nghiệp không chỉ là dấu mốc khép lại một chặng đường học tập, mà còn là khoảnh khắc để mình nhìn lại và trân trọng tất cả những người đã xuất hiện, đồng hành và góp phần làm nên những năm tháng thanh xuân thật đẹp. Có những ngày vui, những lúc mệt mỏi, những lần tưởng chừng muốn bỏ cuộc, nhưng nhờ có gia đình, thầy cô, bạn bè và những người luôn yêu thương, động viên mà mình đã có thể đi đến ngày hôm nay. Sự hiện diện của mọi người chính là món quà ý nghĩa nhất trong ngày hôm nay. 🤍`,
+    guestbookMessage: `   Ngày tốt nghiệp không chỉ là dấu mốc khép lại một chặng đường học tập, mà còn là khoảnh khắc để mình nhìn lại và trân trọng tất cả những người đã xuất hiện, đồng hành và góp phần làm nên những năm tháng thanh xuân thật đẹp. Có những ngày vui, những lúc mệt mỏi, những lần tưởng chừng muốn bỏ cuộc, nhưng nhờ có gia đình, thầy cô, bạn bè và những người luôn yêu thương, động viên mà mình đã có thể đi đến ngày hôm nay. Sự hiện diện của mọi người chính là món quà ý nghĩa nhất trong ngày hôm nay. 🤍`,
   },
 
   // ===== GALLERY - Ảnh sẽ được chia thành 3 bố cục =====
