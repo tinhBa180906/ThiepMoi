@@ -237,12 +237,12 @@ const HeroSection = ({ guestName }) => {
             THÂN MỜI
           </p>
           
-          <div className="flex justify-center items-center relative group w-full max-w-sm">
+          <div className="flex justify-center items-center relative group">
             <input
               type="text"
               value={displayed}
               onChange={(e) => setGuestNameInput(e.target.value)}
-              className="bg-transparent border-b border-transparent focus:border-[var(--aof-green)]/30 outline-none text-center drop-shadow-md transition-colors w-full"
+              className="bg-transparent border-b border-transparent focus:border-[var(--aof-green)]/30 outline-none text-center drop-shadow-md transition-colors"
               placeholder="Nhập tên..."
               style={{
                 fontFamily: 'var(--font-handwriting)',
@@ -250,21 +250,23 @@ const HeroSection = ({ guestName }) => {
                 color: 'var(--aof-gold)',
                 textShadow: '1px 1px 3px rgba(0,0,0,0.15)',
                 lineHeight: 1.25,
+                width: '90%',
+                maxWidth: '320px'
               }}
             />
+            
+            {/* Copy Button */}
+            <button 
+              onClick={handleOpenModal}
+              title="Sao chép link gửi khách"
+              className="absolute right-0 p-2 text-[var(--aof-gray)] hover:text-[var(--aof-gold)] transition-colors opacity-50 hover:opacity-100"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
           </div>
-
-          {/* Sao chép liên kết button */}
-          <button 
-            onClick={handleOpenModal}
-            className="mt-4 flex items-center justify-center gap-2 px-5 py-2.5 text-[0.7rem] font-semibold uppercase tracking-[0.2em] border border-[var(--aof-gold)] text-[var(--aof-gold-dark)] rounded-full hover:bg-[var(--aof-gold)] hover:text-white transition-all active:scale-95"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-            </svg>
-            Tạo Link & Sao Chép
-          </button>
         </motion.div>
 
         {/* Ngày giờ ngắn */}
