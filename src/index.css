@@ -1,0 +1,698 @@
+@import "tailwindcss";
+
+/* Google Fonts được load qua <link> trong index.html */
+
+/* ===== AOF DESIGN TOKENS ===== */
+:root {
+  /* Brand Colors - Học viện Tài chính */
+  --aof-green:       #1a4731;   /* Xanh lá đậm chủ đạo */
+  --aof-green-mid:   #235c3f;   /* Xanh lá trung */
+  --aof-green-light: #2d7a52;   /* Xanh lá sáng hơn */
+  --aof-green-pale:  #e8f5ee;   /* Xanh lá nhạt (bg nhẹ) */
+  --aof-gold:        #c9a84c;   /* Vàng nhấn chính */
+  --aof-gold-light:  #e8d5a3;   /* Vàng nhạt */
+  --aof-gold-dark:   #8b6914;   /* Vàng đậm */
+  --aof-white:       #ffffff;
+  --aof-off-white:   #fafaf8;
+  --aof-cream:       #f5f0e8;
+  --aof-paper:       #fdf8f0;
+  --aof-dark:        #0f2a1d;   /* Xanh đậm tối nhất */
+  --aof-gray:        #6b7280;
+  --aof-gray-light:  #d1d5db;
+
+  /* Typography */
+  --font-display:    'Playfair Display', serif;   /* Tiêu đề sang trọng */
+  --font-body:       'Inter', sans-serif;          /* Văn bản dễ đọc */
+  --font-handwriting:'Dancing Script', cursive;    /* Chữ ký / viết tay */
+  --font-classic:    'EB Garamond', serif;         /* Serif cổ điển */
+
+  /* Shadows */
+  --shadow-card: 0 4px 24px rgba(26, 71, 49, 0.12);
+  --shadow-gold: 0 4px 20px rgba(201, 168, 76, 0.3);
+}
+
+/* ===== RESET ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  /* Nền desktop: xám nhạt → khối phone-frame nổi bật giữa màn hình */
+  background: #f3f4f6;
+  color: var(--aof-green);
+  overflow-x: hidden;
+  line-height: 1.7;
+  min-height: 100dvh;
+}
+
+/* ==========================================
+   PHONE FRAME CONTAINER
+   Trên PC: hiện như điện thoại giữa màn hình
+   Trên Mobile: full-screen, không scroll ngang
+   ========================================== */
+.phone-frame {
+  position: relative;
+  width: 100%;
+  max-width: 430px;        /* Giới hạn width như điện thoại */
+  margin: 0 auto;
+  min-height: 100dvh;
+  background: var(--aof-white);
+  overflow: hidden;         /* Chặn mọi overflow ngang */
+  /* Đổ bóng đẹp khi xem trên PC */
+  box-shadow: 0 0 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+}
+/* Trên mobile: full width, bỏ box-shadow */
+@media (max-width: 480px) {
+  .phone-frame {
+    max-width: 100%;
+    box-shadow: none;
+  }
+}
+
+/* ===== CUSTOM SCROLLBAR ===== */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--aof-off-white); }
+::-webkit-scrollbar-thumb { background: var(--aof-green); border-radius: 99px; }
+
+/* ==========================================
+   SECTION: TORN PAPER EFFECT
+   Tạo đường "rách giấy" chuyển cảnh giữa Hero → Info
+   ========================================== */
+.torn-paper-bottom {
+  position: relative;
+}
+.torn-paper-bottom::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: var(--aof-green);
+  clip-path: polygon(
+    0% 100%, 0% 60%,
+    2% 80%,  4% 55%,  6% 75%,  8% 45%,  10% 65%,
+    12% 85%, 14% 50%, 16% 70%, 18% 40%, 20% 68%,
+    22% 82%, 24% 52%, 26% 72%, 28% 48%, 30% 70%,
+    32% 88%, 34% 56%, 36% 76%, 38% 44%, 40% 66%,
+    42% 84%, 44% 54%, 46% 74%, 48% 46%, 50% 68%,
+    52% 86%, 54% 58%, 56% 78%, 58% 42%, 60% 64%,
+    62% 82%, 64% 52%, 66% 72%, 68% 48%, 70% 70%,
+    72% 88%, 74% 56%, 76% 76%, 78% 44%, 80% 66%,
+    82% 84%, 84% 54%, 86% 74%, 88% 46%, 90% 68%,
+    92% 86%, 94% 58%, 96% 78%, 98% 50%, 100% 72%,
+    100% 100%
+  );
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* ==========================================
+   SECTION: FILM STRIP EFFECT
+   Viền cuộn phim cho gallery
+   ========================================== */
+.film-strip {
+  position: relative;
+  background: #1a1a1a;
+  padding: 20px 0;
+}
+.film-strip::before,
+.film-strip::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: repeating-linear-gradient(
+    to right,
+    #1a1a1a 0px, #1a1a1a 8px,
+    #333 8px, #333 10px,
+    #1a1a1a 10px, #1a1a1a 28px
+  );
+}
+.film-strip::before { top: 0; }
+.film-strip::after  { bottom: 0; }
+
+.film-perforations {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.film-perforations span {
+  display: block;
+  width: 14px;
+  height: 10px;
+  background: #000;
+  border-radius: 2px;
+  border: 1px solid #444;
+}
+
+/* ==========================================
+   SECTION: CALENDAR BLOCK COMPONENT
+   Khối lịch nổi bật cho ngày sự kiện
+   ========================================== */
+.calendar-block {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid var(--aof-gold);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-gold);
+}
+.calendar-block__header {
+  background: var(--aof-green);
+  color: var(--aof-gold-light);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 6px 20px;
+  width: 100%;
+  text-align: center;
+}
+.calendar-block__day {
+  background: var(--aof-white);
+  color: var(--aof-green);
+  font-family: var(--font-display);
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 8px 24px 4px;
+  text-align: center;
+}
+.calendar-block__month {
+  background: var(--aof-cream);
+  color: var(--aof-green-mid);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 20px 8px;
+  text-align: center;
+  width: 100%;
+}
+
+/* ==========================================
+   AOF BUTTON STYLES
+   ========================================== */
+.btn-aof {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0.875rem 2.5rem;
+  background: var(--aof-green);
+  color: var(--aof-white);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.btn-aof::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.08) 100%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.btn-aof:hover { background: var(--aof-green-light); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(26,71,49,0.35); }
+.btn-aof:hover::before { opacity: 1; }
+.btn-aof:active { transform: translateY(0); }
+.btn-aof:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.btn-aof-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0.75rem 2rem;
+  background: transparent;
+  color: var(--aof-green);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1.5px solid var(--aof-green);
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.btn-aof-outline:hover { background: var(--aof-green); color: var(--aof-white); }
+
+/* ==========================================
+   AOF INPUT STYLES
+   ========================================== */
+.aof-input {
+  width: 100%;
+  background: var(--aof-white);
+  border: 1.5px solid var(--aof-gray-light);
+  border-radius: 6px;
+  padding: 0.85rem 1.1rem;
+  color: var(--aof-green);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  outline: none;
+}
+.aof-input::placeholder { color: #9ca3af; }
+.aof-input:focus {
+  border-color: var(--aof-green);
+  box-shadow: 0 0 0 3px rgba(26, 71, 49, 0.08);
+}
+.aof-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--aof-green);
+  margin-bottom: 6px;
+}
+
+/* ==========================================
+   DECORATIVE ELEMENTS
+   ========================================== */
+.gold-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 1.5rem 0;
+}
+.gold-divider::before,
+.gold-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--aof-gold), transparent);
+}
+.gold-divider__icon {
+  color: var(--aof-gold);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  flex-shrink: 0;
+}
+
+/* Texture nền giấy nhẹ */
+.bg-paper-texture {
+  background-color: var(--aof-paper);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23fdf8f0'/%3E%3Crect x='0' y='0' width='1' height='1' fill='%23f0e8d8' opacity='0.4'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%23e8dcc8' opacity='0.25'/%3E%3C/svg%3E");
+}
+
+/* Watermark "2026" chìm */
+.watermark-year {
+  position: absolute;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: rgba(26, 71, 49, 0.06);
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* ==========================================
+   SWIPER OVERRIDES - AOF Style
+   ========================================== */
+.swiper-pagination-bullet {
+  background: var(--aof-green) !important;
+  opacity: 0.3 !important;
+  width: 6px !important;
+  height: 6px !important;
+}
+.swiper-pagination-bullet-active {
+  background: var(--aof-green) !important;
+  opacity: 1 !important;
+  width: 20px !important;
+  border-radius: 3px !important;
+  transition: width 0.3s;
+}
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--aof-green) !important;
+  width: 40px !important;
+  height: 40px !important;
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+}
+
+/* ==========================================
+   SCROLL SNAP - CSS Gallery
+   ========================================== */
+.snap-scroll-x {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.snap-scroll-x::-webkit-scrollbar { display: none; }
+.snap-item { scroll-snap-align: start; }
+
+/* ==========================================
+   ANIMATIONS - Extra
+   ========================================== */
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px) rotate(-2deg); }
+  50% { transform: translateY(-12px) rotate(-1deg); }
+}
+.float-cap { animation: float-gentle 4s ease-in-out infinite; }
+
+@keyframes shimmer-gold {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.shimmer-gold {
+  background: linear-gradient(90deg, var(--aof-gold-dark), var(--aof-gold-light), var(--aof-gold-dark));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer-gold 3s linear infinite;
+}
+
+/* Gạch chân grow animation */
+.underline-grow {
+  position: relative;
+  display: inline-block;
+}
+.underline-grow::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--aof-gold);
+  transition: width 0.4s ease;
+}
+.underline-grow:hover::after { width: 100%; }
+
+/* Section spacing */
+.section-py { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+
+/* ==========================================
+   HERO: GRADIENT MASK FADE
+   Ảnh cover mờ dần vào nền trắng ở phía dưới
+   ========================================== */
+.hero-img-fade {
+  -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  display: block;
+  width: 100%;
+}
+
+/* ==========================================
+   VERTICAL TEXT (CSS writing-mode)
+   Chữ chạy dọc - dùng trong Gallery Overlap
+   ========================================== */
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  white-space: nowrap;
+  transform: rotate(180deg); /* Đọc từ dưới lên */
+  letter-spacing: 0.25em;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--aof-gold);
+}
+
+/* ==========================================
+   CALENDAR MONTH GRID
+   Lịch tháng nghệ thuật cho Date Section
+   ========================================== */
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  width: 100%;
+}
+.cal-cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-family: var(--font-body);
+  color: rgba(255,255,255,0.6);
+  border-radius: 50%;
+  position: relative;
+  transition: background 0.2s;
+}
+.cal-cell--header {
+  color: var(--aof-gold);
+  font-weight: 600;
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  aspect-ratio: auto;
+  padding: 4px 0;
+}
+.cal-cell--today {
+  background: var(--aof-gold);
+  color: var(--aof-dark);
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.35);
+}
+.cal-cell--empty {
+  color: transparent;
+}
+/* Icon mũ trên ô ngày sự kiện */
+.cal-cell--today::before {
+  content: '';
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+}
+
+/* ==========================================
+   LOCATION MAP SECTION
+   ========================================== */
+.map-wrapper {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(26,71,49,0.18);
+}
+.map-wrapper iframe {
+  display: block;
+  width: 100%;
+  height: 220px;
+  border: none;
+  pointer-events: none; /* Chặn cuộn map, click sẽ mở maps app */
+}
+.map-overlay {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 16px;
+  background: linear-gradient(to top, rgba(26,71,49,0.55) 0%, transparent 50%);
+  transition: background 0.3s;
+}
+.map-overlay:hover {
+  background: linear-gradient(to top, rgba(26,71,49,0.7) 0%, rgba(26,71,49,0.1) 60%);
+}
+.map-open-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--aof-white);
+  color: var(--aof-green);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 18px;
+  border-radius: 99px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.map-open-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+/* ==========================================
+   SWIPER OVERRIDES - Phone Frame version
+   ========================================== */
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--aof-white) !important;
+  background: rgba(26,71,49,0.7);
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50%;
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+.swiper-pagination-bullet {
+  background: var(--aof-white) !important;
+  opacity: 0.5 !important;
+}
+.swiper-pagination-bullet-active {
+  background: var(--aof-gold) !important;
+  opacity: 1 !important;
+  width: 18px !important;
+  border-radius: 3px !important;
+}
+
+/* ==========================================
+   FILM STRIP SECTION — Infinite Marquee
+   ========================================== */
+
+/* Lỗ đục răng cưa (perforations) trên/dưới thước phim.
+   Dùng repeating-linear-gradient tạo "lỗ" màu tối xen kẽ nền trong */
+.film-perforations-strip {
+  height: 16px;
+  width: 100%;
+  background-color: #111;
+  background-image: repeating-linear-gradient(
+    to right,
+    #111        0px,
+    #111        10px,
+    transparent 10px,
+    transparent 18px,
+    #111        18px,
+    #111        28px
+  );
+  background-size: 28px 100%;
+  position: relative;
+}
+/* Lỗ mô phỏng: hình chữ nhật trắng mờ xen giữa */
+.film-perforations-strip::after {
+  content: '';
+  position: absolute;
+  inset: 3px 0;
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent 0px,
+    transparent 10px,
+    rgba(255,255,255,0.09) 10px,
+    rgba(255,255,255,0.09) 18px,
+    transparent 18px,
+    transparent 28px
+  );
+  background-size: 28px 100%;
+  border-radius: 2px;
+}
+
+/* Vùng ảnh cuộn phim: nền đen nhám */
+.film-reel {
+  background-color: #1a1a1a;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%231a1a1a'/%3E%3Crect x='0' y='0' width='1' height='1' fill='%23222' opacity='0.5'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%23111' opacity='0.4'/%3E%3C/svg%3E");
+  overflow: hidden;
+  padding: 10px 0;
+}
+
+/* ==========================================
+   FILM TRACK — SEAMLESS MARQUEE (Fixed)
+   translateX(-50%) vì array đã nhân đôi → 1 vòng hoàn chỉnh
+   ========================================== */
+@keyframes film-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Track cũ (giữ lại để không breaking) */
+.film-track {
+  display: flex;
+  width: max-content;
+  animation: film-scroll 32s linear infinite;
+  will-change: transform;
+}
+.film-track:hover {
+  animation-play-state: paused;
+}
+
+/* Track mới — SEAMLESS FIX
+   Dùng trong FilmStripSection v2:
+   - flex + flexWrap:nowrap → tuyệt đối không xuống dòng
+   - width: max-content → track rộng đúng bằng tổng frame
+   - animation translateX(-50%) = 1 vòng */
+.film-track-seamless {
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  animation: film-scroll 32s linear infinite;
+  will-change: transform;
+}
+.film-track-seamless:hover {
+  animation-play-state: paused;
+}
+
+/* Hover effect cho khung vàng gold */
+.film-frame-gold:hover {
+  border-color: #e8d5a3 !important;
+  transform: translateY(-2px);
+}
+.film-frame-gold:hover img {
+  filter: sepia(0) contrast(1.08) brightness(1.02) !important;
+  transform: scale(1.04);
+}
+
+/* Mỗi khung ảnh (legacy) */
+.film-frame {
+  position: relative;
+  flex-shrink: 0;
+  width: 175px;
+  margin: 0 5px;
+  border: 2px solid #2e2e2e;
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+.film-frame:hover { border-color: var(--aof-gold); }
+.film-frame img {
+  display: block;
+  width: 100%;
+  height: 126px;
+  object-fit: cover;
+  filter: sepia(0.15) contrast(1.05) brightness(0.95);
+  transition: filter 0.4s ease, transform 0.5s ease;
+}
+.film-frame:hover img {
+  filter: sepia(0) contrast(1.08) brightness(1.0);
+  transform: scale(1.04);
+}
+/* Số frame monospace dưới ảnh */
+.film-frame__label {
+  background: #0f0f0f;
+  color: rgba(201,168,76,0.75);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-align: center;
+  padding: 3px 0 5px;
+  user-select: none;
+}
