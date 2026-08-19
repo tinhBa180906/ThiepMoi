@@ -122,10 +122,10 @@ const InfoSection = () => {
         />
       </div>
 
-      <div className="relative z-10 px-6 py-12">
+      <div className="relative z-10 py-12" style={{ paddingLeft: '10px', paddingRight: '10px' }}>
 
         {/* Tiêu đề section */}
-        <motion.div className="text-center mb-8" {...fadeUp(0)}>
+        <motion.div className="text-center mb-8 mt-[5px]" {...fadeUp(0)}>
           <p
             className="text-xs font-semibold tracking-[0.35em] uppercase mb-2"
             style={{ color: 'rgba(201,168,76,0.75)', fontFamily: 'var(--font-body)' }}
@@ -147,7 +147,7 @@ const InfoSection = () => {
 
         {/* ===== LỊCH THÁNG ===== */}
         <motion.div
-          className="mb-8 px-2"
+          className="mb-8"
           {...fadeUp(0.1)}
         >
           {/* Card khung lịch */}
