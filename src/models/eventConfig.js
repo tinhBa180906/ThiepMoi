@@ -38,7 +38,7 @@ export const EVENT_CONFIG = {
     heroTagline: 'The Beginning of a New Journey',
 
     // Tâm thư - lưu bút
-    guestbookMessage: `Mỗi chặng đường đều có một điểm dừng,\nmỗi hành trình đều có một bình minh mới.\n\nBốn năm qua là những trang nhật ký\nđầy ắp kỷ niệm — những đêm thức khuya,\nnhững buổi sáng vội vã, và những khoảnh khắc\nta cùng nhau lớn lên.\n\nHôm nay, tôi trân trọng từng kỷ niệm đó\nvà mong được chia sẻ niềm vui tốt nghiệp\ncùng những người đã đồng hành.`,
+    guestbookMessage: `Ngày tốt nghiệp không chỉ là dấu mốc khép lại một chặng đường học tập, mà còn là khoảnh khắc để mình nhìn lại và trân trọng tất cả những người đã xuất hiện, đồng hành và góp phần làm nên những năm tháng thanh xuân thật đẹp. Có những ngày vui, những lúc mệt mỏi, những lần tưởng chừng muốn bỏ cuộc, nhưng nhờ có gia đình, thầy cô, bạn bè và những người luôn yêu thương, động viên mà mình đã có thể đi đến ngày hôm nay. Sự hiện diện của mọi người chính là món quà ý nghĩa nhất trong ngày hôm nay. 🤍`,
   },
 
   // ===== GALLERY - Ảnh sẽ được chia thành 3 bố cục =====
@@ -110,7 +110,7 @@ export const EVENT_CONFIG = {
  *   {{wish_message}}  — Lời nhắn
  */
 export const EMAILJS_CONFIG = {
-  SERVICE_ID: 'YOUR_SERVICE_ID',   // TODO: Dán Service ID từ EmailJS dashboard
-  TEMPLATE_ID: 'YOUR_TEMPLATE_ID',  // TODO: Dán Template ID từ EmailJS dashboard
-  PUBLIC_KEY: 'YOUR_PUBLIC_KEY',   // TODO: Dán Public Key từ EmailJS dashboard
+  SERVICE_ID: 'service_mtmxg73',   // TODO: Dán Service ID từ EmailJS dashboard
+  TEMPLATE_ID: 'template_hg97ogf',  // TODO: Dán Template ID từ EmailJS dashboard
+  PUBLIC_KEY: 'kBCrRu9E_tDk-IC6j',   // TODO: Dán Public Key từ EmailJS dashboard
 };
