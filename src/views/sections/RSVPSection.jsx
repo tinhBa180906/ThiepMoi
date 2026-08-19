@@ -12,6 +12,7 @@
  * Màn hình Thank You sau khi gửi thành công.
  */
 
+import { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, CheckCircle, RefreshCw, User, MessageSquare, Phone, Mail, Calendar } from 'lucide-react';
 import useRSVPForm, { RSVP_STATUS } from '../../controllers/useRSVPForm';
@@ -84,9 +85,12 @@ const FormField = ({ label, icon: Icon, required, children }) => (
   </div>
 );
 
+// ===== THANK YOU SCREEN =====
+
 // ===== MAIN COMPONENT =====
 const RSVPSection = () => {
   const { rsvp, event } = EVENT_CONFIG;
+  const formRef = useRef();
 
   const {
     formData,
@@ -97,7 +101,7 @@ const RSVPSection = () => {
     resetForm,
   } = useRSVPForm();
 
-  const isAttending = formData.rsvpStatus === RSVP_STATUS.ATTENDING;
+  const isAttending = formData.attendance_status === 'Chắc chắn tham gia';
 
   return (
     <section
@@ -189,24 +193,25 @@ const RSVPSection = () => {
                 <ThankYouScreen
                   key="success"
                   isAttending={isAttending}
-                  name={formData.guestDisplayName}
+                  name={formData.from_name}
                   onReset={resetForm}
                 />
               ) : (
                 <motion.form
                   key="form"
+                  ref={formRef}
                   initial={{ opacity: 1 }}
                   exit={{ opacity: 0, x: -20 }}
-                  onSubmit={handleSubmit}
+                  onSubmit={(e) => handleSubmit(e, formRef.current)}
                   className="space-y-5"
                 >
                   {/* Tên */}
                   <FormField label="Họ và tên" icon={User} required>
                     <input
-                      id="guestDisplayName"
+                      id="from_name"
                       type="text"
-                      name="guestDisplayName"
-                      value={formData.guestDisplayName}
+                      name="from_name"
+                      value={formData.from_name}
                       onChange={handleChange}
                       placeholder="Nhập họ và tên đầy đủ..."
                       className="aof-input"
@@ -218,24 +223,24 @@ const RSVPSection = () => {
                   {/* Xác nhận tham dự (Select) */}
                   <FormField label="Xác nhận tham dự" icon={Calendar} required>
                     <select
-                      id="rsvpStatus"
-                      name="rsvpStatus"
-                      value={formData.rsvpStatus}
+                      id="attendance_status"
+                      name="attendance_status"
+                      value={formData.attendance_status}
                       onChange={handleChange}
                       className="aof-input"
                       style={{ cursor: 'pointer' }}
                     >
-                      <option value={RSVP_STATUS.ATTENDING}>{RSVP_STATUS.ATTENDING}</option>
-                      <option value={RSVP_STATUS.DECLINING}>{RSVP_STATUS.DECLINING}</option>
+                      <option value="Chắc chắn tham gia">Chắc chắn tham gia</option>
+                      <option value="Rất tiếc không thể đến">Rất tiếc không thể đến</option>
                     </select>
                   </FormField>
 
                   {/* Lời nhắn */}
                   <FormField label="Lời nhắn gửi" icon={MessageSquare}>
                     <textarea
-                      id="wishMessage"
-                      name="wishMessage"
-                      value={formData.wishMessage}
+                      id="message"
+                      name="message"
+                      value={formData.message}
                       onChange={handleChange}
                       placeholder="Gửi lời chúc mừng hoặc nhắn nhủ điều gì đó..."
                       rows={3}
@@ -248,10 +253,10 @@ const RSVPSection = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <FormField label="Số điện thoại" icon={Phone}>
                       <input
-                        id="guestPhone"
+                        id="phone_number"
                         type="tel"
-                        name="guestPhone"
-                        value={formData.guestPhone}
+                        name="phone_number"
+                        value={formData.phone_number}
                         onChange={handleChange}
                         placeholder="0912 345 678"
                         className="aof-input"
@@ -259,16 +264,15 @@ const RSVPSection = () => {
                       />
                     </FormField>
 
-                    <FormField label="Email" icon={Mail} required>
+                    <FormField label="Email" icon={Mail}>
                       <input
-                        id="guestEmail"
+                        id="guest_email"
                         type="email"
-                        name="guestEmail"
-                        value={formData.guestEmail}
+                        name="guest_email"
+                        value={formData.guest_email}
                         onChange={handleChange}
                         placeholder="your@email.com"
                         className="aof-input"
-                        required
                         autoComplete="email"
                       />
                     </FormField>
